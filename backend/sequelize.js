@@ -4,7 +4,7 @@ const UserModel = require("./models/user");
 const DiaryEntryModel = require("./models/diaryEntry");
 
 const sequelize = new Sequelize(
-  "postgres://postgres:admin@127.0.0.1:5432/myDiary"
+  `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/myDiary`
 ); //PGSQL connection
 
 const User = UserModel(sequelize, Sequelize); //Create User Model

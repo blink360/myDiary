@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //import routers
 app.use("/user", require("./routes/user"));
 app.use("/entries", require("./routes/diaryEntry"));
+app.use("/diaryEntryAnalysis", require("./routes/sentimentAnalyzer"));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

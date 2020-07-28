@@ -6,6 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
+    "apos-to-lex-form": "^1.0.5",
     "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.4",
     "date-and-time": "^0.13.1",
@@ -14,10 +15,13 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "natural": "^2.1.5",
     "nodemon": "^2.0.4",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
-    "sequelizer": "^1.1.4"
+    "sequelizer": "^1.1.4",
+    "spelling-corrector": "^3.0.0",
+    "stopword": "^1.0.1"
   },
   "main": "app.js",
   "devDependencies": {},

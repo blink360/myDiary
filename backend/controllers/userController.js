@@ -1,5 +1,5 @@
 const { User } = require("../sequelize");
-const bcrpyt = require("bcrypt");
+const bcrypt = require("bcrypt");
 
 exports.login = async (req, res) => {
   let { email, password } = req.body;
@@ -14,7 +14,7 @@ exports.login = async (req, res) => {
 
   console.log(userExists);
 
-  if (userExists && bcrpyt.compareSync(password, userExists[0].password)) {
+  if (userExists && bcrypt.compareSync(password, userExists[0].password)) {
     res
       .json({
         message: "Login Successful",

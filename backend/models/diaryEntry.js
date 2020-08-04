@@ -17,5 +17,9 @@ module.exports = (sequelize, type) => {
       type: type.TEXT,
       allowNull: false,
     },
+    sentimentScore: {
+      type: type.FLOAT,
+      allowNull: true,
+    },
   });
 };

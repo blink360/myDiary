@@ -1,4 +1,5 @@
 const { DiaryEntry } = require("../sequelize");
+const { sentimentAnalyzerFunction } = require("./sentimentAnalyzer");
 let datetime = require("date-and-time");
 
 exports.createDiaryEntry = async (req, res) => {
@@ -7,11 +8,14 @@ exports.createDiaryEntry = async (req, res) => {
 
   if (!entry) throw "Diary entry is empty";
 
+  let sentimentScore = await sentimentAnalyzerFunction(entry);
+
   await DiaryEntry.create({
     date: date,
     userId: userId,
     entry: entry,
     title: title,
+    sentimentScore: sentimentScore,
   });
 
   res.status(200).json({
@@ -53,8 +57,10 @@ exports.updateDiaryEntry = async (req, res) => {
   if (!userId) throw "UserId is required";
   if (!entry) throw "Entry is empty";
 
+  let updatedSentimentScore = await sentimentAnalyzerFunction(entry);
+
   await DiaryEntry.update(
-    { entry: entry },
+    { entry: entry, sentimentScore: updatedSentimentScore },
     {
       where: { id: entryId, userId: userId },
     }
@@ -76,7 +82,7 @@ exports.deleteDiaryEntry = async (req, res) => {
 
   await DiaryEntry.destroy({
     where: {
-      entryId: entryId,
+      id: entryId,
       userId: userId,
     },
   }).catch((err) => {

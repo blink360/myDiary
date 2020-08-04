@@ -31,7 +31,7 @@ let preProcessor = (text) => {
   });
 };
 
-exports.sentimentAnalyzer = async (req, res) => {
+exports.sentimentAnalyzerApi = async (req, res) => {
   /*This is a simple sentiment analysis algorithm based on a vocabulary that assigns polarity to words. 
   The algorithm calculates the sentiment of a piece of text by summing the polarity of each word and normalizing with the length of the sentence. If a negation occurs the result is made negative.*/
 
@@ -44,5 +44,22 @@ exports.sentimentAnalyzer = async (req, res) => {
 
   res.status(200).json({
     sentimentScore: analysis,
+  });
+};
+
+exports.sentimentAnalyzerFunction = (string) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { SentimentAnalyzer, PorterStemmer } = nlp;
+
+      let textToAnalyze = await preProcessor(string);
+
+      const analyzer = new SentimentAnalyzer("English", PorterStemmer, "afinn");
+      const analysis = analyzer.getSentiment(textToAnalyze);
+
+      resolve(analysis);
+    } catch (err) {
+      reject(err.message);
+    }
   });
 };

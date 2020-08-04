@@ -13,7 +13,7 @@ const DiaryEntry = DiaryEntryModel(sequelize, Sequelize); //Create Diary Entry M
 User.hasMany(DiaryEntry);
 DiaryEntry.belongsTo(User);
 
-sequelize.sync().then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log(`Databases and tables created successfully`);
 });
 

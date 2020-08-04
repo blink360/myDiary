@@ -9,6 +9,10 @@ module.exports = (sequelize, type) => {
       type: type.STRING,
       allowNull: false,
     },
+    title: {
+      type: type.STRING,
+      allowNull: false,
+    },
     entry: {
       type: type.TEXT,
       allowNull: false,

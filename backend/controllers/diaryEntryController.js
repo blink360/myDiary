@@ -2,12 +2,17 @@ const { DiaryEntry } = require("../sequelize");
 let datetime = require("date-and-time");
 
 exports.createDiaryEntry = async (req, res) => {
-  let { entry, userId } = req.body;
+  let { entry, userId, title } = req.body;
   let date = datetime.format(new Date(), "YYYY-MM-DD HH:mm");
 
   if (!entry) throw "Diary entry is empty";
 
-  await DiaryEntry.create({ date: date, userId: userId, entry: entry });
+  await DiaryEntry.create({
+    date: date,
+    userId: userId,
+    entry: entry,
+    title: title,
+  });
 
   res.status(200).json({
     message: "Diary Entry created",
@@ -26,6 +31,21 @@ exports.listAllDiaryEntries = async (req, res) => {
   if (entries) res.status(200).json(entries);
 };
 
+exports.listDiaryEntryById = async (req, res) => {
+  let { id } = req.params;
+  let { userId } = req.body;
+
+  let entry = await DiaryEntry.findAll({
+    raw: true,
+    where: {
+      id: id,
+      userId: userId,
+    },
+  });
+  if (!entry) throw "No entry found";
+  else res.status(200).json(entry);
+};
+
 exports.updateDiaryEntry = async (req, res) => {
   let { entryId, userId, entry } = req.body;
 
@@ -38,7 +58,9 @@ exports.updateDiaryEntry = async (req, res) => {
     {
       where: { id: entryId, userId: userId },
     }
-  );
+  ).catch((err) => {
+    throw err;
+  });
 
   res.status(200).json({
     message: "Entry updated successfully",
@@ -57,6 +79,8 @@ exports.deleteDiaryEntry = async (req, res) => {
       entryId: entryId,
       userId: userId,
     },
+  }).catch((err) => {
+    throw err;
   });
 
   res.status(200).json({

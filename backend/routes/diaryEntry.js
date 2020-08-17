@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post("/create", catchErrors(createDiaryEntry));
 router.post("/listAll", catchErrors(listAllDiaryEntries));
-router.patch("/update", catchErrors(updateDiaryEntry));
+router.put("/update", catchErrors(updateDiaryEntry));
 router.delete("/delete", catchErrors(deleteDiaryEntry));
 router.post("/listById/:id", catchErrors(listDiaryEntryById));
 

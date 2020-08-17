@@ -41,6 +41,12 @@ function LoginForm(props) {
   let login = () => {
     props.login(email, password);
   };
+
+  let handleKeyPress = (e) =>{
+    if(e.key ==="enter"){
+      login();
+    }
+  }
   const classes = useStyles();
 
   return (
@@ -84,6 +90,7 @@ function LoginForm(props) {
             color="secondary"
             className={classes.submit}
             onClick={login}
+            onKeyDown={(e) => handleKeyPress(e)}
           >
             Login
           </Button>

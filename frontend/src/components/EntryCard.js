@@ -9,29 +9,37 @@ import {
 
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
+import banner from "../assets/images/entry_heading_banner.png";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    height: "auto",
+    height: 250,
+    cursor:"pointer"
   },
-  actionIcons: {
-    marginLeft: "auto",
-    border: 0,
-  },
+  cardHeader: {
+    backgroundImage: `url(${banner})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "100%"
+  }
 }));
 
 function EntryCard(props) {
   document.title = `Dashboard`;
   const classes = useStyles();
+
+  let handleClick = () => {
+    props.setModalData(props.data);
+    props.setShowPopup(true);
+    props.setModalType("info");
+  }
+
   return (
-    <Card variant="outlined" className={classes.card}>
-      <CardActionArea>
-        <CardHeader title={props.title} />
-        <CardContent>
-          <Typography variant="h6">{props.date}</Typography>
-          <Typography paragraph>{props.body.substring(0, 150)}...</Typography>
-        </CardContent>
-      </CardActionArea>
+    <Card variant="outlined" className={classes.card} onClick={() => handleClick()}>
+      <CardHeader title={props.title} className={classes.cardHeader} />
+      <CardContent>
+        <Typography variant="h6">{props.date.split(' ')[0]} <Typography align="right">{props.date.split(' ')[1]} </Typography> </Typography>
+        <Typography paragraph>{props.body.substring(0, 150)}...</Typography>
+      </CardContent>
     </Card>
   );
 }
